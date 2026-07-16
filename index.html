@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma de matriz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Suma de Matrices</h1>
+
+<div class="code-container">
+    <div class="copy-icon"></div>
+    <pre><code><span class="variable">matriz_a</span> = [[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">7</span>,<span class="number">4</span>,<span class="number">9</span>],[<span class="number">5</span>,<span class="number">4</span>,<span class="number">8</span>]]
+<span class="variable">matriz_b</span> = [[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">7</span>,<span class="number">4</span>,<span class="number">9</span>],[<span class="number">5</span>,<span class="number">4</span>,<span class="number">8</span>]]
+
+<div class="highlighted-block"><span class="variable">resultado</span> = [
+    [<span class="variable">matriz_a</span>[<span class="variable">i</span>][<span class="variable">j</span>] + <span class="variable">matriz_b</span>[<span class="variable">i</span>][<span class="variable">j</span>] <span class="keyword">for</span> <span class="variable">j</span> <span class="keyword">in</span> <span class="keyword">range</span>(<span class="keyword">len</span>(<span class="variable">matriz_a</span>[<span class="number">0</span>]))] 
+    <span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="keyword">range</span>(<span class="keyword">len</span>(<span class="variable">matriz_a</span>))
+]</div>
+
+<div class="console-container">
+    <pre><code>Las matrices originales eran
+primera matriz
+[2, 3, 4]
+[7, 4, 9]
+[5, 4, 8]
+segunda matriz
+[2, 3, 4]
+[7, 4, 9]
+[5, 4, 8]
+la suma en total es
+[4, 6, 8]
+[14, 8, 18]
+[10, 8, 16]</code></pre>
+</div>
+<button><a href="suma.html" style="color: aliceblue;   ">Hacer tu propia matriz</a></button>
+</body>
+</html>

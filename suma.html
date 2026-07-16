@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suma de Matrices 3x3</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Suma de Matrices 3x3</h1>
+
+<div class="container">
+  <div class="matrices">
+
+    <table class="matrix" id="matrizA">
+      <caption>Matriz A</caption>
+      <tr><td><input type="number" value="0"></td><td><input type="number" value="0"></td><td><input type="number" value="0"></td></tr>
+      <tr><td><input type="number" value="0"></td><td><input type="number" value="0"></td><td><input type="number" value="0"></td></tr>
+      <tr><td><input type="number" value="0"></td><td><input type="number" value="0"></td><td><input type="number" value="0"></td></tr>
+    </table>
+
+    <table class="matrix" id="matrizB">
+      <caption>Matriz B</caption>
+      <tr><td><input type="number" value="0"></td><td><input type="number" value="0"></td><td><input type="number" value="0"></td></tr>
+      <tr><td><input type="number" value="0"></td><td><input type="number" value="0"></td><td><input type="number" value="0"></td></tr>
+      <tr><td><input type="number" value="0"></td><td><input type="number" value="0"></td><td><input type="number" value="0"></td></tr>
+    </table>
+
+  </div>
+
+  <button onclick="sumar()">Sumar</button>
+
+  <div id="resultado"></div>
+
+
+</div>
+
+<script>
+function leerMatriz(idTabla) {
+  const inputs = document.querySelectorAll(`#${idTabla} input`);
+  const valores = Array.from(inputs).map(i => Number(i.value) || 0);
+  return [valores.slice(0, 3), valores.slice(3, 6), valores.slice(6, 9)];
+}
+
+function pintarMatriz(matriz) {
+  let html = "<table class='matrix' style='margin:0 auto;'>";
+  matriz.forEach(fila => {
+    html += "<tr>" + fila.map(v => `<td style="padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;">${v}</td>`).join("") + "</tr>";
+  });
+  html += "</table>";
+  return html;
+}
+
+function sumarMatricesLocal(matrizA, matrizB) {
+  return matrizA.map((fila, i) => fila.map((valor, j) => valor + matrizB[i][j]));
+}
+
+async function sumar() {
+  const matrizA = leerMatriz("matrizA");
+  const matrizB = leerMatriz("matrizB");
+  const resultadoDiv = document.getElementById("resultado");
+
+  try {
+    const respuesta = await fetch("/api/sumar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ matrizA, matrizB })
+    });
+
+    if (!respuesta.ok) {
+      throw new Error("No se pudo contactar la API");
+    }
+
+    const datos = await respuesta.json();
+
+    if (datos.error) {
+      throw new Error(datos.error);
+    }
+
+    resultadoDiv.innerHTML = "<p><strong>Resultado (A + B)</strong></p>" + pintarMatriz(datos.resultado);
+    return;
+  } catch (error) {
+    const resultado = sumarMatricesLocal(matrizA, matrizB);
+    resultadoDiv.innerHTML =
+      "<p><strong>Resultado (A + B)</strong></p>" +
+      pintarMatriz(resultado) +
+      "<p style='color:#b45309;font-size:0.95rem;'>Se mostró el resultado calculado localmente porque la API no estuvo disponible.</p>";
+  }
+}
+</script>
+
+</body>
+</html>
