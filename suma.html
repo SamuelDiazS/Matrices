@@ -78,14 +78,11 @@ async function sumar() {
       throw new Error(datos.error);
     }
 
-    resultadoDiv.innerHTML = "<p><strong>Resultado (A + B)</strong></p>" + pintarMatriz(datos.resultado);
+    resultadoDiv.innerHTML = "<p>Resultado</p>" + pintarMatriz(datos.resultado);
     return;
   } catch (error) {
     const resultado = sumarMatricesLocal(matrizA, matrizB);
-    resultadoDiv.innerHTML =
-      "<p><strong>Resultado (A + B)</strong></p>" +
-      pintarMatriz(resultado) +
-      "<p style='color:#b45309;font-size:0.95rem;'>Se mostró el resultado calculado localmente porque la API no estuvo disponible.</p>";
+    resultadoDiv.innerHTML = "<p>Resultado</p>" + pintarMatriz(resultado);
   }
 }
 </script>
